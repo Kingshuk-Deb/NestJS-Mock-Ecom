@@ -15,7 +15,21 @@ export class ProductService {
     });
   }
 
-  findAll() {
+  group(products: any) {
+    return products.reduce
+  }
+
+  async findAll() {
+    const products = await this.productRepository.find({ isDeleted: false });
+    const groupProduct = products.reduce((acc, prod) => {
+      const cat = prod['category'];
+      if(!acc[cat]) {
+        acc[cat] = [];
+      }
+      acc[cat].push(prod);
+      return acc;
+    }, {});
+    console.log(groupProduct);
     return this.productRepository.find({ isDeleted: false });
   }
 
